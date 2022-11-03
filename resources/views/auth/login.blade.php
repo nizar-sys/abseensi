@@ -22,7 +22,7 @@
                                             class="form-control @error('email')
                                             is-invalid
                                         @enderror"
-                                            placeholder="Masukkan Email" autocomplete="off" name="email" value="{{ old('email') }}">
+                                            required placeholder="Masukkan Email" autocomplete="off" name="email" value="{{ old('email') }}">
                                         @error('email')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -39,7 +39,7 @@
                                                 class="form-control @error('password')
                                                 is-invalid
                                             @enderror"
-                                                placeholder="Masukkan Katasandi" name="password" autocomplete="off">
+                                                required placeholder="Masukkan Katasandi" name="password" autocomplete="off">
                                             @error('password')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                                             @enderror

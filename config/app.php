@@ -16,6 +16,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'author' => env('AUTHOR_NAME', 'emnizaar'),
 
     /*
     |--------------------------------------------------------------------------

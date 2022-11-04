@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\RayonCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+// greeting to api
+Route::get('/', function(){
+    return response()->json([
+        'author' => config('app.author'),
+        'message' => 'Selamat datang di aplikasi Abseensi!'
+    ]);
+});
+
+Route::middleware('auth.session')->group(function(){
+
+    // students groups api
+    Route::resource('rayons', RayonCrudController::class);
 });

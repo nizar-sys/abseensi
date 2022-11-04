@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Rayon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,5 +25,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'created_at' => now()
         ]);
+
+        Rayon::factory(100)->create();
     }
 }

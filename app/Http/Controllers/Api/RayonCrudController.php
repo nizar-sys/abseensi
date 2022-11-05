@@ -22,26 +22,19 @@ class RayonCrudController extends Controller
         $filter = $request->filter;
         $order = $request->order;
 
-        if (isset($order['id'])) {
-            $rayonQuery->orderBy('id', $order['id']);
-        }
-
-        if (isset($order['created_at'])) {
-            $rayonQuery->orderBy('created_at', $order['created_at']);
-        }
-
         if (isset($filter['nama_rayon'])) {
             $rayonQuery->where('nama_rayon', 'LIKE', '%' . $filter['nama_rayon'] . '%');
         }
 
         if (isset($filter['id'])) {
-            $rayonQuery->where('id', $filter['id']);
+            $rayonQuery->where('uuid', $filter['id']);
         }
 
 
-        $rayons = $rayonQuery->paginate($filter['per_page'] ?? 20, ['id', 'nama_rayon', 'created_at']);
+        $rayons = $rayonQuery->orderBy('created_at', $order['created_at'] ?? 'desc')->paginate($filter['per_page'] ?? 20, ['uuid', 'nama_rayon', 'created_at']);
 
         return response()->json([
+            'status' => 'ok',
             'response' => $rayons,
             'params' => $request->all(),
         ]);
@@ -55,7 +48,12 @@ class RayonCrudController extends Controller
      */
     public function store(RequestStoreOrUpdateRayon $request)
     {
-        //
+        $newRayon = Rayon::create($request->all());
+        return response()->json([
+            'status' => 'ok',
+            'response' => $newRayon,
+            'params' => $request->all(),
+        ]);
     }
 
     /**
@@ -100,6 +98,12 @@ class RayonCrudController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Rayon::whereUuid($id)->firstOrFail()->delete();
+
+        return response()->json([
+            'status' => 'ok',
+            'response' => [],
+            'params' => [],
+        ]);
     }
 }

@@ -17,7 +17,7 @@ class RayonFactory extends Factory
     public function definition()
     {
         return [
-            'id' => fake()->uuid(),
+            'uuid' => fake()->uuid(),
             'nama_rayon' => fake()->name(),
             'created_at' => now()
         ];

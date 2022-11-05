@@ -15,7 +15,8 @@ class CreateRayonsTable extends Migration
     public function up()
     {
         Schema::create('rayons', function (Blueprint $table) {
-            $table->uuid('id')->unique()->default(Str::uuid())->primary();
+            $table->id();
+            $table->uuid()->default(Str::uuid());
             $table->string('nama_rayon');
             $table->timestamps();
             $table->dateTime('deleted_at')->nullable();

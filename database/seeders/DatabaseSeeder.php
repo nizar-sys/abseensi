@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Rayon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
+            'uuid' => Str::uuid(),
             'name' => 'admin',
             'email' => 'nizarid04@gmail.com',
             'password' => Hash::make('password'),

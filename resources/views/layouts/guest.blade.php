@@ -36,12 +36,13 @@
     <script src="{{ asset('/design-docs') }}/dist/js/demo.min.js?1667333929" defer></script>
     <script src="{{ asset('/design-docs') }}/dist/js/snackbar.js"></script>
     <script>
-        @if (Session::has('success-logout'))
+        @if (Session::has('must-login'))
             SnackBar({
-                message: "Berhasil keluar!",
-                position: "bc",
+                message: "Silahkan masuk untuk melanjutkan.",
+                position: "tc",
                 width: "500px",
-                status: 'success'
+                status: 'info',
+                dismissible: false,
             });
         @endif
     </script>

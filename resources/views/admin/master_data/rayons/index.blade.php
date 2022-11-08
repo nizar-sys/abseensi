@@ -69,6 +69,35 @@
                 </div>
             </div>
         </div>
+        <div class="modal modal-blur fade" id="modal-edit-class-groups" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ubah rayon</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" id="form-edit-class-groups">
+                            <div class="mb-3">
+                                <label class="form-label mb-3" for="nama_rayon">Nama rayon</label>
+                                <input type="text" class="form-control input-nama_rayon" name="nama_rayon"
+                                    placeholder="Ketik nama rayon... cth: Ciawi 4">
+                                <div class="invalid-feedback d-block invalid-nama_rayon"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                            Batal
+                        </a>
+                        <button class="btn btn-primary ms-auto" id="edit-class-groups">
+                            <x-icon type="edit" classicon="" />
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </x-slot>
 
     <div class="container-xl">
@@ -137,6 +166,6 @@
             let iconEdit = `<x-icon type="edit" classicon="icon-tabler icon-tabler-edit" />`
             let iconHapus = `<x-icon type="trash" classicon="icon-tabler icon-tabler-trash" />`
         </script>
-        @vite('resources/js/admin/master_data/rayons/index.js')
+        @vite('resources/js/admin/master_data/rayons/script.js')
     @endsection
 </x-app-layout>

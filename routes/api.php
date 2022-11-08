@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\RayonCrudController;
+use App\Http\Controllers\Api\RombelCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,5 @@ Route::middleware('auth.session')->group(function(){
 
     // students groups api
     Route::resource('rayons', RayonCrudController::class);
+    Route::resource('rombels', RombelCrudController::class);
 });

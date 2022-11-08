@@ -129,6 +129,12 @@ async function getClassGroup(url = apiUrl, filterData = null) {
                 var uuid = $(e.target).attr("data-uuid");
                 removeClassGroups(uuid);
             });
+
+            $(".edit-class-groups").click((e) => {
+                e.preventDefault();
+                var uuid = $(e.target).attr("data-uuid");
+                editClassGroups(uuid);
+            });
         })
         .catch((error) => {
             snackbarRetryGetClassGroup();
@@ -148,13 +154,14 @@ function inputInvalid(responseError) {
     }
 }
 
-function snackbarToast(message, status = "error") {
+function snackbarToast(message, status = "error", ...args) {
     SnackBar({
         message,
         position: "bc",
         width: "500px",
         status,
         fixed: true,
+        ...args,
     });
 }
 
@@ -177,6 +184,7 @@ async function saveNewClassGroups() {
                     status: "success",
                     fixed: true,
                 });
+                $("#form-new-class-groups").trigger('reset')
             }
         })
         .catch((error) => {
@@ -220,6 +228,74 @@ async function removeClassGroups(uuid, status = "show-modal") {
     }
 }
 
+async function editClassGroups(uuid, status = "show-modal") {
+    var buttonEdit = $("#edit-class-groups");
+    var inputElements = {
+        nama_rayon: $(".input-nama_rayon"),
+    };
+    buttonEdit.attr("data-uuid", uuid);
+    if (status == "show-modal") {
+        $("#modal-edit-class-groups").modal("show");
+        buttonEdit
+            .html("Tunggu sebentar")
+            .addClass("animated-dots")
+            .attr("disabled", true);
+        inputElements.nama_rayon.attr("disabled", true).val("");
+        const response = HitData(`${apiUrl}/${uuid}`, null, "GET")
+            .then((response) => {
+                var rayon = response.response;
+                inputElements.nama_rayon
+                    .removeAttr("disabled")
+                    .val(rayon.nama_rayon);
+            })
+            .catch((error) => {
+                snackbarToast(
+                    "Gagal mendapatkan data. Mohon coba lagi",
+                    "error"
+                );
+            });
+        buttonEdit
+            .html("Simpan")
+            .removeClass("animated-dots")
+            .attr("disabled", false);
+    } else {
+        const payloadUpdateRayon = $("#form-edit-class-groups").serialize();
+        buttonEdit
+            .html("Mengubah rayon")
+            .addClass("animated-dots")
+            .attr("disabled", true);
+        const response = HitData(`${apiUrl}/${uuid}`, payloadUpdateRayon, "PUT")
+            .then((response) => {
+                if (response.status == "ok") {
+                    SnackBar({
+                        message: "Berhasil mengubah rayon!",
+                        position: "bc",
+                        width: "500px",
+                        status: "success",
+                        fixed: true,
+                    });
+                    $("#modal-edit-class-groups").modal("hide");
+                    getClassGroup();
+                    $("#form-edit-class-groups").trigger('reset');
+                }
+            })
+            .catch((error) => {
+                if (error.status == 422) {
+                    var responseError = error.responseJSON.errors;
+                    inputInvalid(responseError);
+                }
+                snackbarToast(
+                    "Gagal mengubah rayon. Mohon coba lagi.",
+                    "error"
+                );
+            });
+        buttonEdit
+            .html("Simpan")
+            .removeClass("animated-dots")
+            .attr("disabled", false);
+    }
+}
+
 $(document).ready(() => {
     getClassGroup();
 
@@ -259,5 +335,16 @@ $(document).ready(() => {
         e.preventDefault();
         var uuid = $(e.target).attr("data-uuid");
         removeClassGroups(uuid, "delete");
+    });
+
+    $("#form-edit-class-groups").submit((e) => {
+        e.preventDefault();
+        editClassGroups($("#edit-class-groups").attr("data-uuid"), "update");
+    });
+
+    $("#edit-class-groups").click((e) => {
+        e.preventDefault();
+        var uuid = $(e.target).attr("data-uuid");
+        editClassGroups(uuid, "update");
     });
 });

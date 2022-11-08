@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Rayon;
+use App\Models\Rombel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -29,5 +30,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Rayon::factory(100)->create();
+        Rombel::factory(100)->create();
     }
 }

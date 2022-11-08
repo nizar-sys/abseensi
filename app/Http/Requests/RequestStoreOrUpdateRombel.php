@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RequestStoreOrUpdateRayon extends FormRequest
+class RequestStoreOrUpdateRombel extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,16 @@ class RequestStoreOrUpdateRayon extends FormRequest
     public function rules()
     {
         return [
-            'nama_rayon' => 'required|unique:rayons,nama_rayon,' . $this->uuid
+            'nama_rombel' => 'required|unique:rombels,nama_rombel,' . $this->id,
+            'rayon_id' => 'nullable|exists:rayons,uuid'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'nama_rombel' => "Rombel",
+            'rayon_id' => 'Rayon'
         ];
     }
 }

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RequestStoreOrUpdateRayon;
-use App\Http\Resources\RayonCollection;
+use App\Http\Requests\RequestStoreOrUpdateRombel;
 use App\Models\Rayon;
+use App\Models\Rombel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RayonCrudController extends Controller
+class RombelCrudController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,24 +17,24 @@ class RayonCrudController extends Controller
      */
     public function index(Request $request)
     {
-        $rayonQuery = Rayon::query();
+        $rombelQuery = Rombel::query();
         $filter = $request->filter;
         $order = $request->order;
 
-        if (isset($filter['nama_rayon'])) {
-            $rayonQuery->where('nama_rayon', 'LIKE', '%' . $filter['nama_rayon'] . '%');
+        if (isset($filter['nama_rombel'])) {
+            $rombelQuery->where('nama_rombel', 'LIKE', '%' . $filter['nama_rombel'] . '%');
         }
 
         if (isset($filter['id'])) {
-            $rayonQuery->where('uuid', $filter['id']);
+            $rombelQuery->where('uuid', $filter['id']);
         }
 
 
-        $rayons = $rayonQuery->orderBy('created_at', $order['created_at'] ?? 'desc')->paginate($filter['per_page'] ?? 20, ['uuid', 'nama_rayon', 'created_at']);
+        $rombels = $rombelQuery->with('rayon:id,uuid,nama_rayon')->orderBy('created_at', $order['created_at'] ?? 'desc')->paginate($filter['per_page'] ?? 20, ['uuid', 'nama_rombel', 'rayon_id', 'created_at']);
 
         return response()->json([
             'status' => 'ok',
-            'response' => $rayons,
+            'response' => $rombels,
             'params' => $request->all(),
         ]);
     }
@@ -46,9 +45,13 @@ class RayonCrudController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RequestStoreOrUpdateRayon $request)
+    public function store(RequestStoreOrUpdateRombel $request)
     {
-        $newRayon = Rayon::create($request->all());
+        $payloadAddRombel = [
+            'nama_rombel' => $request->nama_rombel,
+            'rayon_id' => Rayon::whereUuid($request->rayon_id)->first()->id ?? null,
+        ];
+        $newRayon = Rombel::create($payloadAddRombel);
         return response()->json([
             'status' => 'ok',
             'response' => $newRayon,
@@ -64,23 +67,12 @@ class RayonCrudController extends Controller
      */
     public function show($id)
     {
-        $rayon = Rayon::whereUuid($id)->firstOrFail();
+        $rombel = Rombel::whereUuid($id)->firstOrFail();
 
         return response()->json([
             'status' => 'ok',
-            'response' => $rayon,
+            'response' => $rombel,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -90,14 +82,14 @@ class RayonCrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestStoreOrUpdateRayon $request, $id)
+    public function update(RequestStoreOrUpdateRombel $request, $id)
     {
-        $rayon = Rayon::whereUuid($id)->firstOrFail();
-        $rayon->update($request->validated());
+        $rombel = Rombel::whereUuid($id)->firstOrFail();
+        $rombel->update($request->validated());
         
         return response()->json([
             'status' => 'ok',
-            'response' => $rayon,
+            'response' => $rombel,
             'params' => $request->all(),
         ]);
     }
@@ -110,7 +102,7 @@ class RayonCrudController extends Controller
      */
     public function destroy($id)
     {
-        Rayon::whereUuid($id)->firstOrFail()->delete();
+        Rombel::whereUuid($id)->firstOrFail()->delete();
 
         return response()->json([
             'status' => 'ok',

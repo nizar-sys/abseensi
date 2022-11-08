@@ -20,6 +20,7 @@ class AuthenticatedSessionController extends Controller
         if (Auth::check()) {
             return redirect(route('dashboard'));
         }
+        session()->put('must-login', true);
         return view('auth.login');
     }
 

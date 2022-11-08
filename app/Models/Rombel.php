@@ -2,19 +2,30 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Rayon extends Model
+class Rombel extends Model
 {
     use HasFactory, SoftDeletes;
     
     protected $fillable = [
         'uuid',
-        'nama_rayon'
+        'nama_rombel',
+        'rayon_id'
     ];
+
+    protected $dates = [
+        'deleted_at',
+    ];
+    
+    public function rayon()
+    {
+        return $this->belongsTo(Rayon::class, 'rayon_id', 'id');
+    }
 
     protected static function boot()
     {
@@ -28,10 +39,5 @@ class Rayon extends Model
         static::updating(function ($model) {
             $model->updated_at = now();
         });
-    }
-
-    public function rombels()
-    {
-        return $this->hasMany(Rombel::class, 'rayon_id', 'id');
     }
 }

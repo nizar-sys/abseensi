@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\RayonController;
+use App\Http\Controllers\RombelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
     // students group
     Route::resource('rayons', RayonController::class);
+    Route::prefix('rombels')->name('rombels.')->group(function(){
+        Route::get('/', [RombelController::class, 'index'])->name('index');
+    });
 });

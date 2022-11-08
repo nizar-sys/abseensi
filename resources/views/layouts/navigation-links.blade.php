@@ -14,7 +14,7 @@
     </a>
 </li>
 
-<li class="nav-item @if ($routeActive == 'rayons.index') active @endif dropdown">
+<li class="nav-item @if ($routeActive == 'rayons.index' || $routeActive == 'rombels.index') active @endif dropdown">
     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside"
         role="button" aria-expanded="false">
         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -28,6 +28,9 @@
         <div class="dropdown-menu-columns">
             <a class="dropdown-item" href="{{ route('rayons.index') }}">
                 Rayon
+            </a>
+            <a class="dropdown-item" href="{{ route('rombels.index') }}">
+                Rombel
             </a>
         </div>
     </div>

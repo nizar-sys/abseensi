@@ -8,12 +8,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }} @yield('title')</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <!-- CSS files -->
     <link href="{{ asset('/design-docs') }}/dist/css/tabler.min.css?1667333929" rel="stylesheet" />
     <link href="{{ asset('/design-docs') }}/dist/css/tabler-flags.min.css?1667333929" rel="stylesheet" />
     <link href="{{ asset('/design-docs') }}/dist/css/tabler-payments.min.css?1667333929" rel="stylesheet" />
     <link href="{{ asset('/design-docs') }}/dist/css/tabler-vendors.min.css?1667333929" rel="stylesheet" />
     <link href="{{ asset('/design-docs') }}/dist/css/demo.min.css?1667333929" rel="stylesheet" />
+    <link href="{{ asset('/design-docs') }}/dist/css/snackbar.css" rel="stylesheet" />
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -62,38 +64,13 @@
         </div>
     </div>
 
+    @if (isset($modals))
+        {{ $modals }}
+    @endif
+
     <div class="page">
         <!-- Navbar -->
         <x-header type="normal" />
-        <div class="navbar-expand-md">
-            <div class="collapse navbar-collapse" id="navbar-menu">
-                <div class="navbar navbar-light">
-                    <div class="container-xl">
-                        <ul class="navbar-nav">
-                            @include('layouts.navigation-links')
-                        </ul>
-                        <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last d-none">
-                            <form action="./" method="get" autocomplete="off" novalidate>
-                                <div class="input-icon">
-                                    <span class="input-icon-addon">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/search -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <circle cx="10" cy="10" r="7" />
-                                            <line x1="21" y1="21" x2="15" y2="15" />
-                                        </svg>
-                                    </span>
-                                    <input type="text" value="" class="form-control" placeholder="Search…"
-                                        aria-label="Search in website">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="page-wrapper">
             @if (isset($header))
                 {{ $header }}
@@ -128,7 +105,7 @@
     <!-- Tabler Core -->
     <script src="{{ asset('/design-docs') }}/dist/js/tabler.min.js?1667333929" defer></script>
     <script src="{{ asset('/design-docs') }}/dist/js/demo.min.js?1667333929" defer></script>
-
+    <script src="{{ asset('/design-docs') }}/dist/js/snackbar.js"></script>
     @yield('script')
 </body>
 

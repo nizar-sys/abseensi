@@ -1356,17 +1356,19 @@
                 fill="#24292E" />
         </svg>
     @elseif($type === 'chevron-left')
-        <svg width="20" height="20" viewBox="0 0 20 20" class="{{ $classicon }}"
-            xmlns="http://www.w3.org/2000/svg">
-            <path class="{{ $classicon }}" fill-rule="evenodd" clip-rule="evenodd"
-                d="M12.3169 16.0669C12.0729 16.311 11.6771 16.311 11.4331 16.0669L6.01639 10.6503C5.77231 10.4062 5.77231 10.0105 6.01639 9.76639L11.4331 4.34972C11.6771 4.10565 12.0729 4.10565 12.3169 4.34972C12.561 4.5938 12.561 4.98953 12.3169 5.23361L7.34222 10.2083L12.3169 15.1831C12.561 15.4271 12.561 15.8229 12.3169 16.0669Z" />
-        </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon {{$classicon}}" width="24" height="24"
+        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path class="{{$classicon}}" stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <polyline points="15 6 9 12 15 18" />
+    </svg>
     @elseif($type === 'chevron-right')
-        <svg width="20" height="20" viewBox="0 0 20 20" class="{{ $classicon }}"
-            xmlns="http://www.w3.org/2000/svg">
-            <path class="{{ $classicon }}" fill-rule="evenodd" clip-rule="evenodd"
-                d="M7.89143 4.14241C8.13551 3.89833 8.53124 3.89833 8.77532 4.14241L14.192 9.55908C14.4361 9.80315 14.4361 10.1989 14.192 10.443L8.77532 15.8596C8.53124 16.1037 8.13551 16.1037 7.89143 15.8596C7.64735 15.6155 7.64735 15.2198 7.89143 14.9757L12.8662 10.001L7.89143 5.02629C7.64735 4.78221 7.64735 4.38649 7.89143 4.14241Z" />
-        </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon {{$classicon}}" width="24" height="24"
+    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path class="{{$classicon}}" stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <polyline points="9 6 15 12 9 18" />
+</svg>
     @elseif($type === 'chevron-up-small')
         <svg width="20" height="20" viewBox="0 0 20 20" class="{{ $classicon }}"
             xmlns="http://www.w3.org/2000/svg">
@@ -1533,10 +1535,11 @@
                 d="M9.37504 5.41665C9.37504 3.23052 11.1472 1.45831 13.3334 1.45831H17.5C17.8452 1.45831 18.125 1.73814 18.125 2.08331C18.125 2.42849 17.8452 2.70831 17.5 2.70831H13.3334C11.8376 2.70831 10.625 3.92088 10.625 5.41665V10.1578L12.4748 8.30804C12.7188 8.06396 13.1146 8.06396 13.3586 8.30804C13.6027 8.55211 13.6027 8.94784 13.3586 9.19192L10.442 12.1086C10.1979 12.3527 9.80218 12.3527 9.5581 12.1086L6.64143 9.19192C6.39735 8.94784 6.39735 8.55211 6.64143 8.30804C6.88551 8.06396 7.28124 8.06396 7.52532 8.30804L9.37504 10.1578V5.41665Z" />
         </svg>
     @elseif($type === 'edit')
-        <svg width="20" height="20" viewBox="0 0 20 20" class="{{ $classicon }}"
-            xmlns="http://www.w3.org/2000/svg">
-            <path class="{{ $classicon }}" fill-rule="evenodd" clip-rule="evenodd"
-                d="M14.3931 1.78676C14.9653 1.23368 15.8752 1.24139 16.4379 1.80409L18.5926 3.95874C19.1689 4.5351 19.161 5.47196 18.5749 6.03846L16.1674 8.36573L6.44399 17.7787C6.24292 17.9733 5.99008 18.106 5.71566 18.1609L2.40205 18.8236C1.67318 18.9694 1.03055 18.3268 1.17633 17.5979L1.83615 14.2988C1.8942 14.0085 2.03918 13.7428 2.25183 13.537L11.9647 4.13429L14.3931 1.78676ZM15.554 2.68797C15.4736 2.60759 15.3437 2.60649 15.2619 2.6855L13.2908 4.5909L15.7401 7.04022L17.7062 5.13973C17.7899 5.0588 17.791 4.92496 17.7087 4.84263L15.554 2.68797ZM14.8416 7.90945L12.3923 5.46012L3.12126 14.4351C3.09088 14.4645 3.07017 14.5025 3.06188 14.5439L2.46334 17.5366L5.47051 16.9352C5.50972 16.9273 5.54584 16.9084 5.57456 16.8806L14.8416 7.90945Z" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon {{$classicon}}" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path class="{{ $classicon }}" stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path class="{{ $classicon }}" d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+            <path class="{{ $classicon }}" d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+            <path class="{{ $classicon }}" d="M16 5l3 3"></path>
         </svg>
     @elseif($type === 'delete')
         <svg width="20" height="20" viewBox="0 0 20 20" class="{{ $classicon }}"
@@ -3771,12 +3774,38 @@
             <path class="{{ $classicon }}" d="M9 17v1a3 3 0 0 0 6 0v-1" />
         </svg>
     @elseif($type === 'alert-triangle')
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon {{ $classicon }}" width="24"
-            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-            stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon {{ $classicon }}" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
             <path class="{{ $classicon }}" stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path class="{{ $classicon }}" d="M12 9v2m0 4v.01" />
             <path class="{{ $classicon }}"
                 d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
         </svg>
+    @elseif($type === 'packages')
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon {{$classicon}}" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path clas="{{$classicon}}" stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path clas="{{$classicon}}" d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+            <path clas="{{$classicon}}" d="M2 13.5v5.5l5 3" />
+            <path clas="{{$classicon}}" d="M7 16.545l5 -3.03" />
+            <path clas="{{$classicon}}" d="M17 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+            <path clas="{{$classicon}}" d="M12 19l5 3" />
+            <path clas="{{$classicon}}" d="M17 16.5l5 -3" />
+            <path clas="{{$classicon}}" d="M12 13.5v-5.5l-5 -3l5 -3l5 3v5.5" />
+            <path clas="{{$classicon}}" d="M7 5.03v5.455" />
+            <path clas="{{$classicon}}" d="M12 8l5 -3" />
+        </svg>
+        @elseif($type === "plus")
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon {{$classicon}}" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path class="{{$classicon}}" stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+        @elseif($type === "trash")
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon {{ $classicon }}" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path class="{{ $classicon }}" stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+            <path class="{{ $classicon }}" d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+            <path class="{{ $classicon }}" d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+         </svg>
     @endif

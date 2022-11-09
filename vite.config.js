@@ -7,6 +7,8 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/admin/master_data/rayons/script.js',
+                'resources/js/admin/master_data/rombels/script.js',
             ],
             refresh: true,
         }),

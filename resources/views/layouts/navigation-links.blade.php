@@ -1,4 +1,9 @@
-<li class="nav-item active">
+@php
+    $routeActive = Route::currentRouteName();
+@endphp
+
+
+<li class="nav-item @if ($routeActive == 'dashboard') active @endif">
     <a class="nav-link" href="./">
         <span class="nav-link-icon d-md-none d-lg-inline-block">
             <x-icon type="home" classicon="icon" />
@@ -7,4 +12,26 @@
             Home
         </span>
     </a>
+</li>
+
+<li class="nav-item @if ($routeActive == 'rayons.index' || $routeActive == 'rombels.index') active @endif dropdown">
+    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+        role="button" aria-expanded="false">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <x-icon type="packages" classicon="icon"/>
+        </span>
+        <span class="nav-link-title">
+            Master data
+        </span>
+    </a>
+    <div class="dropdown-menu">
+        <div class="dropdown-menu-columns">
+            <a class="dropdown-item" href="{{ route('rayons.index') }}">
+                Rayon
+            </a>
+            <a class="dropdown-item" href="{{ route('rombels.index') }}">
+                Rombel
+            </a>
+        </div>
+    </div>
 </li>

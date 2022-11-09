@@ -62,6 +62,78 @@
                 </div>
             </div>
         </div>
+        <div class="modal modal-blur fade" id="modal-remove-class" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-status bg-danger"></div>
+                    <div class="modal-body text-center py-4">
+                        <x-icon type="alert-triangle" classicon="mb-2 text-danger icon-lg" />
+                        <h3>Apakah Anda yakin?</h3>
+                        <div class="text-muted">Anda akan menghapus data rombel, dan data terkaitnya seperti data siswa.</div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="w-100">
+                            <div class="row">
+                                <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                        Batal
+                                    </a></div>
+                                <div class="col"><a href="#" class="btn btn-danger w-100" id="delete-class">
+                                        Hapus
+                                    </a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal modal-blur fade" id="modal-edit-class" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ubah rombel</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" id="form-edit-class">
+                            <input type="hidden" name="old_rayon" id="old_rayon">
+                            <div class="mb-3">
+                                <label class="form-label mb-3" for="nama_rombel">Nama rombel</label>
+                                <input type="text" class="form-control input-nama_rombel" name="nama_rombel"
+                                    placeholder="Ketik nama rombel... cth: PPLG XII" id="rombel-edit">
+                                <div class="invalid-feedback d-block invalid-nama_rombel"></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <label class="form-label mb-3" for="rayon_id">Rayon (<i>optional</i>)</label>
+                                    </div>
+                                    <div class="col-auto align-self-center">
+                                        <span class="form-help" data-bs-toggle="popover" data-bs-placement="top"
+                                            data-bs-content="<p>Cari rayon berdasarkan nama rayon. Pastikan nama rayon sesuai dengan daftar data rayon.</p>"
+                                            data-bs-html="true">?</span>
+                                    </div>
+                                </div>
+                                <input list="rayonEditListData" name="rayon_id" class="form-select input-rayon_id" placeholder="Cari rayon..." id="rayon-edit"/>
+                                <datalist id="rayonEditListData">
+
+                                </datalist>
+                                <div class="invalid-feedback d-block invalid-rayon_id"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                            Batal
+                        </a>
+                        <button class="btn btn-primary ms-auto" id="update-class">
+                            <x-icon type="plus" classicon="" />
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </x-slot>
 
     <div class="container-xl">

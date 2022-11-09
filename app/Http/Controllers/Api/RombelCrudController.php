@@ -67,7 +67,7 @@ class RombelCrudController extends Controller
      */
     public function show($id)
     {
-        $rombel = Rombel::whereUuid($id)->firstOrFail();
+        $rombel = Rombel::with('rayon')->whereUuid($id)->firstOrFail();
 
         return response()->json([
             'status' => 'ok',
@@ -85,7 +85,10 @@ class RombelCrudController extends Controller
     public function update(RequestStoreOrUpdateRombel $request, $id)
     {
         $rombel = Rombel::whereUuid($id)->firstOrFail();
-        $rombel->update($request->validated());
+        $rombel->update([
+            'nama_rombel' => $request->nama_rombel,
+            'rayon_id' => Rayon::whereUuid($request->rayon_id)->first()->id ?? null,
+        ]);
         
         return response()->json([
             'status' => 'ok',

@@ -42,11 +42,12 @@ function renderTableClass(rombel) {
                             <span class="dropdown">
                             <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Aksi</button>
                             <div class="dropdown-menu dropdown-menu-center">
-                                <a class="dropdown-item edit-class text-yellow" data-uuid="${
+                                <button class="dropdown-item edit-class text-yellow" data-uuid="${
                                     rombel.uuid
-                                }" href="#">
+                                }" data-bs-toggle="modal"
+                                data-bs-target="#modal-edit-class">
                                 ${iconEdit} Edit
-                                </a>
+                                </button>
                                 <a class="dropdown-item remove-class text-red" data-uuid="${
                                     rombel.uuid
                                 }" href="#">
@@ -127,10 +128,48 @@ async function getClass(url = apiUrl, filterData = null) {
                 var url = $(e.target).attr("href");
                 getClass(url);
             });
+
+            $(".remove-class").click((e) => {
+                e.preventDefault();
+                var uuid = $(e.target).data("uuid");
+                deleteClass(uuid);
+            });
         })
         .catch((error) => {
             snackbarRetryGetClass();
         });
+}
+
+async function deleteClass(uuid, status = "show-modal") {
+    var buttonDelete = $("#delete-class");
+    if (status == "show-modal") {
+        $("#modal-remove-class").modal("show");
+        buttonDelete.attr("data-uuid", uuid);
+    } else {
+        buttonDelete
+            .html("Menghapus rombel")
+            .addClass("animated-dots")
+            .attr("disabled", true);
+        const response = HitData(`${apiUrl}/${uuid}`, null, "DELETE")
+            .then(({ status, response }) => {
+                if (status == "ok") {
+                    $("#modal-remove-class").modal("hide");
+                    snackbarToast("Berhasil menghapus data rombel.", "success");
+                    getClass();
+                }
+                buttonDelete
+                    .html("Hapus")
+                    .removeClass("animated-dots")
+                    .attr("disabled", false);
+            })
+            .catch((error) => {
+                snackbarToast("Gagal menghapus, mohon coba lagi.");
+                buttonDelete
+                    .html("Hapus")
+                    .removeClass("animated-dots")
+                    .attr("disabled", false);
+            });
+    }
 }
 
 function snackbarToast(message, status = "error", ...args) {
@@ -188,7 +227,6 @@ function inputInvalid(responseError) {
 }
 
 function saveNewClass() {
-    event.preventDefault();
     var selectRayon = $("#rayon_id");
     var payloadRombel = {
         nama_rombel: $(".input-nama_rombel").val(),
@@ -218,6 +256,10 @@ function saveNewClass() {
                 });
                 $("#form-new-class").trigger("reset");
             }
+            buttonSave
+                .html("Simpan")
+                .removeClass("animated-dots")
+                .attr("disabled", false);
         })
         .catch((error) => {
             if (error.status == 422) {
@@ -225,11 +267,59 @@ function saveNewClass() {
                 inputInvalid(responseError);
             }
             snackbarToast("Terjadi kesalahan, mohon coba lagi.");
+            buttonSave
+                .html("Simpan")
+                .removeClass("animated-dots")
+                .attr("disabled", false);
         });
-    buttonSave
-        .html("Simpan")
-        .removeClass("animated-dots")
-        .attr("disabled", false);
+}
+
+function updateClass(uuid) {
+    var buttonUpdate = $("#update-class");
+    var payloadUpdateRombel = {
+        nama_rombel: $("#rombel-edit").val(),
+        rayon_id:
+            $(
+                `#${$("#rayon-edit").attr("list")} option[value='` +
+                    $("#rayon-edit").val() +
+                    "']"
+            ).attr("data-uuid") || $("#old_rayon").val(),
+        uuid,
+    };
+    buttonUpdate
+        .html("Mengubah rombel")
+        .addClass("animated-dots")
+        .attr("disabled", true);
+    const response = HitData(`${apiUrl}/${uuid}`, payloadUpdateRombel, "PUT")
+        .then(({ status }) => {
+            if (status == "ok") {
+                $("#modal-edit-class").modal("hide");
+                getClass();
+                SnackBar({
+                    message: "Berhasil mengubah rombel!",
+                    position: "bc",
+                    width: "500px",
+                    status: "success",
+                    fixed: true,
+                });
+                $("#form-edit-class").trigger("reset");
+            }
+            buttonUpdate
+                .html("Simpan")
+                .removeClass("animated-dots")
+                .attr("disabled", false);
+        })
+        .catch((error) => {
+            if (error.status == 422) {
+                var responseError = error.responseJSON.errors;
+                inputInvalid(responseError);
+            }
+            snackbarToast("Gagal mengubah rombel. mohon coba lagi.");
+            buttonUpdate
+                .html("Simpan")
+                .removeClass("animated-dots")
+                .attr("disabled", false);
+        });
 }
 
 $(document).ready(() => {
@@ -264,14 +354,93 @@ $(document).ready(() => {
                 per_page: 100,
             },
         };
+        $("#form-new-class").trigger("reset");
         initializeSelectRayon(filter);
     });
-    
+
     $("#form-new-class").submit((e) => {
+        e.preventDefault();
         saveNewClass();
     });
 
     $("#save-class").click(() => {
         saveNewClass();
+    });
+
+    $("#delete-class").click((e) => {
+        e.preventDefault();
+        var uuid = $(e.target).attr("data-uuid");
+        deleteClass(uuid, "delete");
+    });
+
+    $("#modal-edit-class").on("shown.bs.modal", (e) => {
+        var uuid = $(e.relatedTarget).data("uuid");
+        var buttonUpdate = $("#update-class");
+        var formUpdate = $("#form-edit-class");
+        var dataRayonListView = $("#rayonEditListData");
+        formUpdate.trigger("reset");
+        dataRayonListView.html("");
+        buttonUpdate
+            .html("Tunggu sebentar")
+            .addClass("animated-dots")
+            .attr("disabled", true);
+        formUpdate.find("input").attr("disabled", true);
+
+        const rombelDetail = HitData(`${apiUrl}/${uuid}`, null, "GET")
+            .then(({ response }) => {
+                var rombel = response;
+                var filter = {
+                    filter: {
+                        per_page: 100,
+                    },
+                };
+                const rayonList = HitData("/api/rayons", filter, "GET")
+                    .then(({ response }) => {
+                        var rayonListData = response.data;
+                        rayonListData.map((rayon) => {
+                            dataRayonListView.append(
+                                `<option data-uuid="${rayon.uuid}" value="${
+                                    rayon.nama_rayon
+                                }" ${
+                                    rayon.id == rombel.rayon_id ?? "0"
+                                        ? "selected"
+                                        : ""
+                                }>${rayon.nama_rayon}</option>`
+                            );
+                            $("#rombel-edit").val(rombel.nama_rombel);
+                            $("#old_rayon").val(rombel.rayon?.uuid);
+                            $("#rayon-edit").val(rombel.rayon?.nama_rayon);
+                            buttonUpdate.attr("data-uuid", uuid);
+                        });
+                        buttonUpdate
+                            .html("Simpan")
+                            .removeClass("animated-dots")
+                            .attr("disabled", false);
+                        formUpdate.find("input").attr("disabled", false);
+                    })
+                    .catch((error) => {
+                        buttonUpdate
+                            .html("Simpan")
+                            .removeClass("animated-dots")
+                            .attr("disabled", false);
+                        snackbarToast(
+                            "Gagal mendapatkan data rayon. Mohon coba lagi"
+                        );
+                    });
+            })
+            .catch((error) => {
+                buttonUpdate
+                    .html("Simpan")
+                    .removeClass("animated-dots")
+                    .attr("disabled", false);
+                snackbarToast(
+                    "Gagal mendapatkan data rombel. Mohon coba lagi."
+                );
+            });
+    });
+
+    $("#update-class").click((e) => {
+        var uuid = $(e.target).data("uuid");
+        updateClass(uuid);
     });
 });

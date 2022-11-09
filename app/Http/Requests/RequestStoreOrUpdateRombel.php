@@ -24,7 +24,7 @@ class RequestStoreOrUpdateRombel extends FormRequest
     public function rules()
     {
         return [
-            'nama_rombel' => 'required|unique:rombels,nama_rombel,' . $this->id,
+            'nama_rombel' => 'required',
             'rayon_id' => 'nullable|exists:rayons,uuid'
         ];
     }

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Rayon;
 use App\Models\Rombel;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -29,7 +30,8 @@ class DatabaseSeeder extends Seeder
             'created_at' => now()
         ]);
 
-        Rayon::factory(100)->create();
-        Rombel::factory(100)->create();
+        // Rayon::factory(100)->create();
+        // Rombel::factory(100)->create();
+        Student::factory(100)->create();
     }
 }

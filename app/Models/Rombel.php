@@ -40,4 +40,9 @@ class Rombel extends Model
             $model->updated_at = now();
         });
     }
+
+    public function students()
+    {
+        return $this->belongsTo(Student::class, 'rombel_id', 'id');
+    }
 }

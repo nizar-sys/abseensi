@@ -57,4 +57,9 @@ class User extends Authenticatable
             $model->updated_at = now();
         });
     }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'user_id', 'id');
+    }
 }

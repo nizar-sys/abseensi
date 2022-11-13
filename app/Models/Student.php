@@ -4,18 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Rayon extends Model
+class Student extends Model
 {
-    use HasFactory, SoftDeletes;
-    
-    protected $fillable = [
-        'uuid',
-        'nama_rayon'
-    ];
-
+    use HasFactory;
     protected static function boot()
     {
         parent::boot();
@@ -29,14 +22,26 @@ class Rayon extends Model
             $model->updated_at = now();
         });
     }
+    protected $fillable = [
+        'uuid',
+        'nis',
+        'user_id',
+        'rayon_id',
+        'rombel_id',
+    ];
 
-    public function rombels()
+    public function user()
     {
-        return $this->hasMany(Rombel::class, 'rayon_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function students()
+    public function rayon()
     {
-        return $this->belongsTo(Student::class, 'rayon_id', 'id');
+        return $this->belongsTo(Rayon::class, 'rayon_id', 'id');
+    }
+
+    public function rombel()
+    {
+        return $this->belongsTo(Rombel::class, 'rombel_id', 'id');
     }
 }
